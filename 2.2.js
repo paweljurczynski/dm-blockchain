@@ -40,3 +40,4 @@ async function run() {
         Gas price: ${gasPrice}
     `)
 }
+
