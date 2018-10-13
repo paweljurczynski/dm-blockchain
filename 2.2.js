@@ -1,9 +1,8 @@
 const fetch = require('isomorphic-fetch');
 
-run();
 
-async function run() {
-    const elementWithTransactionsRes = await fetch('http://localhost:8545/', {
+async function getLastTransactionHash() {
+    const res = await fetch('http://localhost:8545/', {
         method: 'post',
         headers: {
             'Content-Type': 'application/json'
@@ -16,9 +15,13 @@ async function run() {
         })
     });
 
-    const elementWithTransactions = await elementWithTransactionsRes.json();
-    const transactionsHash = elementWithTransactions.result.transactions;
+    const json = await res.json();
+    return json.result.transactions;
+}
 
+run();
+
+async function run() {
     const res = await fetch('http://localhost:8545/', {
         method: 'post',
         headers: {
@@ -28,7 +31,7 @@ async function run() {
             jsonrpc: '2.0',
             id: 1,
             method: 'eth_getTransactionByHash',
-            params: transactionsHash
+            params: await getLastTransactionHash()
         })
     });
 

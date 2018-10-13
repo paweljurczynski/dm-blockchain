@@ -25,4 +25,3 @@ async function run() {
         Parent hash: ${parentHash}
     `)
 }
-
